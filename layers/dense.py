@@ -23,8 +23,3 @@ class Dense:
     def __init__(self, dimensionality):
         self.units = dimensionality
         
-
-x = [1, 2, 3, 4, 5]
-w = [0.1, 0.2, 0.3, 0.4, 0.5]
-b = [ 1, 1, 3, 2 ,1]
-s = sigmoid(x, w, b)

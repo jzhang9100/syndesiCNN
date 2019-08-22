@@ -8,5 +8,6 @@ class Sequential:
     def __init__(self):
         self.layers = []
 
-    def add(self, layer_type):
+    def addDense(self, units):
+
 
