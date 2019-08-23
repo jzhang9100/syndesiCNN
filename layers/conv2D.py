@@ -28,7 +28,8 @@ class Conv2D:
         #make this a new function 
         #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]
         self.kernel = np.random.randint(-1, 2, (self.kernZ, self.kernY, self.kernX)).tolist()        
-   
+  
+    #gets kernel size and mean val
     def get_kernel(self):
         print("Size", self.kernX, self.kernY, self.kernZ)
         print("Kernel:", self.kernel)
@@ -42,6 +43,7 @@ class Conv2D:
         #we want to make sure we have around a zero mean
         print("Mean Val: ", findKernelMean())\
     
+    #applys 'same' padding to tensor
     def same_padding(self, tensor):
         padX, padY = self.kernX - 2, self.kernY - 2
         t = np.pad(tensor, (padX, padY), 'constant')
