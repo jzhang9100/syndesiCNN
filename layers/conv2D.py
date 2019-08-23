@@ -1,8 +1,9 @@
 import numpy as np
 
 '''
-Takes in tensor 4-D  tensor with dimensions Length_Of_Data x Rows x Cols x Channels as input. Adds padding to the tensor and generates the weight matrix. Performs a convolution resulting in a new 4-D tensor with dimensions
-Length_Of_Data x newRows x newCols x Filters
+Takes in tensor 4-D  tensor with dimensions Length_Of_Data x Rows x Cols x Channels as input. 
+Adds padding to the tensor and generates the weight matrix. 
+Performs a convolution resulting in a new 4-D tensor with dimensions Length_Of_Data x newRows x newCols x Filters
 '''
 
 class Conv2D:
