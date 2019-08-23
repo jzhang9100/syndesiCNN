@@ -17,10 +17,8 @@ class Conv2D:
         self.padded_tensor = self.same_padding(tensor)
         
         #get input size of image
-        print('tensor', self.tensor.shape, self.tensor)
-        
+        print('tensor', self.tensor.shape, self.tensor)      
         print('padded tensor', self.padded_tensor.shape, self.padded_tensor)
-        
         self.x, self.y, self.z = self.tensor.shape
 
         #make sure kernel depth is equal to image depth 
