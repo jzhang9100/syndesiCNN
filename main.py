@@ -6,4 +6,4 @@ print(x_train.shape)
 
 test = x_train[0]
 conv_test = Conv2D(test, 64, (3,3))
-conv_test.get_kernel()
+conv_test.get_kernel_info()

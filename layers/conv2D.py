@@ -9,39 +9,48 @@ Performs a convolution resulting in a new 4-D tensor with dimensions Length_Of_D
 class Conv2D:
     def __init__(self, tensor, filters, kernel_size): 
         self.filters = filters
-        (self.kernX, self.kernY) = kernel_size
-        assert self.kernX == self.kernY
-        
-        #set tensor and apply 'same' padding to tensor
         self.tensor = tensor
+        (self.x, self.y, self.z) = self.tensor.shape
+
+        self.kernel = []
+        (self.kernX, self.kernY) = kernel_size
+        self.kernZ = self.z
+        assert self.kernX == self.kernY  #make sure filter is square
+        assert self.kernZ == len(self.tensor[0][0])  #make sure kernel and tensor have the same depth 
+       
+        #create 'filters' amount of filters
+        for i in range(filters):
+            k = self.get_filter()
+            self.kernel.append(k)
+        assert len(self.kernel) == filters  #make sure there is the right amount of filters
+
+        #set tensor and apply 'same' padding to tensor
         self.padded_tensor = self.same_padding(tensor)
         
-        #get input size of image
+        #print tensor and padded tensor
         print('tensor', self.tensor.shape, self.tensor)      
         print('padded tensor', self.padded_tensor.shape, self.padded_tensor)
-        self.x, self.y, self.z = self.tensor.shape
+         
+    #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]
+    def get_filter(self):
+        kern = np.random.randint(-1, 2, (self.kernZ, self.kernY, self.kernX)).tolist()        
+        return kern
 
-        #make sure kernel depth is equal to image depth 
-        self.kernZ = self.z
-        assert self.kernZ == len(self.tensor[0][0]) 
-        
-        #make this a new function 
-        #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]
-        self.kernel = np.random.randint(-1, 2, (self.kernZ, self.kernY, self.kernX)).tolist()        
-  
     #gets kernel size and mean val
-    def get_kernel(self):
+    def get_kernel_info(self):
         print("Size", self.kernX, self.kernY, self.kernZ)
-        print("Kernel:", self.kernel)
-        def findKernelMean():
+        
+        def findKernelMean(kern):
             sum = 0
             for x in range(self.kernZ):
                 for y in range(self.kernX):
                     for z in range(self.kernY):
-                        sum += self.kernel[x][y][z]
+                        sum += kern[x][y][z]
             return sum/(self.kernX*self.kernY*self.kernZ)
+        
+        kernelInfo = [findKernelMean(x) for x in self.kernel]
         #we want to make sure we have around a zero mean
-        print("Mean Val: ", findKernelMean())\
+        print("Mean Vals: ", kernelInfo)
     
     #applys 'same' padding to tensor
     def same_padding(self, tensor):
