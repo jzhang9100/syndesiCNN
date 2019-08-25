@@ -54,13 +54,15 @@ class Conv2D:
                     local_region = np.array(self.padded_tensor[r-3:r,c-3:c])
                     #make sure filter and the local region have the same dimensions 
                     assert local_region.shape == i.shape
-                    
                     tensor_dot_prod = 0
                     #get dot product of the filter and local region of the tensor
                     for chan in range(self.kernZ):
                         tensor_dot_prod += np.dot(local_region[chan].flatten(), i[chan].flatten())
+                          
                     conv_row.append(tensor_dot_prod)
+                
                 conv_layer.append(conv_row)
+
             conv_tensor.append(conv_layer)
         conv_tensor= np.array(conv_tensor)
         print('conv', conv_tensor)
