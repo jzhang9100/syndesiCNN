@@ -2,7 +2,7 @@ import numpy as np
 
 '''
 Takes in tensor 4-D  tensor with dimensions Length_Of_Data x Rows x Cols x Channels as input. 
-Adds padding to the tensor and generates the weight matrix. Performs convolution with stride of 2. 
+Adds padding to the tensor and generates the weight matrix. Performs convolution with stride of 1. 
 Performs a convolution resulting in a new 4-D tensor with dimensions Length_Of_Data x newRows x newCols x Filters
 '''
 
@@ -25,12 +25,20 @@ class Conv2D:
         assert len(self.kernel) == filters  #make sure there is the right amount of filters
 
         #set tensor and apply 'same' padding to tensor
-        self.padded_tensor = self.same_padding(tensor)
-        
-        #print tensor and padded tensor
-        print('tensor', self.tensor.shape, self.tensor)      
+        self.padded_tensor = self.same_padding(tensor)     
+        (self.padX, self.padY, self.padZ) = self.padded_tensor.shape
         print('padded tensor', self.padded_tensor.shape, self.padded_tensor)
-         
+        
+        self.conv = self.conv2D()
+    
+    def conv2D(self):
+        #first try to print each part of the tensor that needs to be multiplied
+        for r in range(3, self.padX+1):
+            for c in range(3, self.padY+1):
+                sec = self.padded_tensor[r-3:r,c-3:c]
+                print('conv',sec, sec.shape)
+                break
+
     #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]
     def get_filter(self):
         kern = np.random.randint(-1, 2, (self.kernZ, self.kernY, self.kernX)).tolist()        
@@ -49,6 +57,8 @@ class Conv2D:
             return sum/(self.kernX*self.kernY*self.kernZ)
         
         kernelInfo = [findKernelMean(x) for x in self.kernel]
+        #peek kernel
+        print(self.kernel[0])
         #we want to make sure we have around a zero mean
         print("Mean Vals: ", kernelInfo)
     
