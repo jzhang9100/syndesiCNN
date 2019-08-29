@@ -35,3 +35,4 @@ class MaxPool:
             down_sampled.append(max_filter)
         
         print(np.shape(down_sampled))
+        return down_sampled
