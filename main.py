@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from keras.datasets import cifar10
 from layers.conv2D import Conv2D
 from layers.activation import Activation
