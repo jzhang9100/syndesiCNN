@@ -7,16 +7,13 @@ def sigmoid(z):
 
 #fully connected layer, takes activations and implements a neural network to compute class scores
 class Dense:
-    def __init__(self, neurons, tensor):
+    def __init__(self, neurons, tensor, num_layers):
         self.neurons = neurons  #number of neurons in the layer
         self.flat = np.array(tensor).flatten()  #flatten tensor
         #weights initiated to be random matrix of neurons x flattened input
         self.weights =  np.random.randint(-1, 2, (self.neurons, len(self.flat)))   
-        self.bias = np.random.randint(-1, 2, (self.neurons, 1)) #random bias vecotor with mean 0 and variance 1
+        self.bias = np.random.normal(0, np.sqrt(2.0/num_layers), (self.neurons, 1)) #random bias vecotor with mean 0 and variance 1
         self.out = self.fowardpass()  #pass input, wieghts, and bias through sigmoid function
-
-        print('connected', self.out, np.shape(self.out))
-        
 
     def fowardpass(self):
         out  = []
@@ -26,3 +23,6 @@ class Dense:
             z = np.dot(self.flat, self.weights[i]) + self.bias[i]  #sigmoid gate
             out.append(sigmoid(z[0]))
         return out
+
+    def show(self):
+        print('score', self.out, np.shape(self.out))
