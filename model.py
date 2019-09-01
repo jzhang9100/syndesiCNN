@@ -19,10 +19,10 @@ class Sequential:
         layer = "activation"
         self.layers.append(layer)
 
-    def add_poo(self):
+    def add_Pool(self):
         layer = "pool"
         self.layers.append(layer)
 
-    def add_dense(self, neurons):
+    def add_Dense(self, neurons):
         layer = "dense," + str(neurons)
         self.layers.append(layer)
