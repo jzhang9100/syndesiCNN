@@ -66,7 +66,6 @@ class Conv2D:
             conv_tensor.append(conv_layer)
         conv_tensor = np.array(conv_tensor)
         print('conv', conv_tensor)
-        print(conv_tensor.shape)
         return conv_tensor
 
     #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]

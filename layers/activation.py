@@ -13,4 +13,5 @@ class Activation:
         for x, d in enumerate(t):
             for i, l in enumerate(d):
                 t[x][i] = list(map(max_fn, l))
+        print(t.shape)
         return t
