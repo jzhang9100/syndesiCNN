@@ -1,9 +1,9 @@
 import numpy as np
 
 '''
-Takes in tensor 4-D  tensor with dimensions Length_Of_Data x Rows x Cols x Channels as input. 
+Takes in tensor 4-D  tensor with dimensions Length_Of_Data x Channels x Rows x Cols as input. 
 Adds padding to the tensor and generates the weight matrix. Performs convolution with stride of 1. 
-Performs a convolution resulting in a new 4-D tensor with dimensions Length_Of_Data x newRows x newCols x Filters
+Performs a convolution resulting in a new 4-D tensor with dimensions Length_Of_Data x Filters x newRows x newCols 
 
 
 variable explination:
@@ -40,7 +40,7 @@ class Conv2D:
         (self.padX, self.padY, self.padZ) = self.padded_tensor.shape
         
         #perform convolution on tensor with filters
-        self.conv = self.conv2D()
+        self.conv = self.conv2D().transpose(0, 1, 2)
             
     def conv2D(self):
         conv_tensor = []
@@ -65,7 +65,6 @@ class Conv2D:
 
             conv_tensor.append(conv_layer)
         conv_tensor = np.array(conv_tensor)
-        print('conv', conv_tensor)
         return conv_tensor
 
     #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]

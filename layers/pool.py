@@ -6,13 +6,12 @@ samples using a spacial extent of 2x2 andd stride of 1. Ex. input volume of 64x3
 
 class MaxPool:
     def __init__(self, tensor):
-        self.tensor = np.array(tensor)
+        self.tensor = tensor
         (self.z, self.y, self.x) = self.tensor.shape
-        self.dwn_smpl = self.maxpool()
+        self.pooled = self.maxpool()
 
     def maxpool(self):
         t = self.tensor
-        t.shape
         down_sampled = []
         #loop through tensor and 
         for i, l in enumerate(t):
@@ -25,7 +24,6 @@ class MaxPool:
                 while c  <= self.x:
                     local_region = self.tensor[i,r-2:r,c-2:c]
                     m = max(local_region.flatten())
-                    
                     max_region.append(m)
                     c += 2
 
@@ -33,6 +31,5 @@ class MaxPool:
                 r +=2 
             
             down_sampled.append(max_filter)
-        
-        print(np.shape(down_sampled))
+        down_sampled = np.array(down_sampled)
         return down_sampled

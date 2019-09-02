@@ -2,6 +2,7 @@ from layers.conv2D import Conv2D
 from layers.activation import Activation
 from layers.dense import Dense
 from layers.pool import MaxPool
+import numpy as np
 
 class Sequential:
     def __init__(self, train_data, train_labels):
@@ -25,7 +26,7 @@ class Sequential:
     
     #adds a max pooling layer to the layer queue
     def add_Pool(self):
-        layer = "pool"
+        layer = "pool,"
         self.layers.append(layer)
 
     #adds a fully connected layer with specified nuerons to layer queue
@@ -61,18 +62,30 @@ class Sequential:
                 break
     
     def evaluate(self, tensor):
-        print(tensor, tensor.shape)
-        def switch(layer, tensor):
-            layers = {
-                "conv":Conv2D(tensor, int(layer[1]), (int(layer[2]), int(layer[3]))).conv,
-                "activation":Activation(tensor).activated_tensor,
-                "pool":MaxPool(tensor).dwn_smpl,
-                'dense':Dense(int(layer[1]), self.fully_connected_layers).out
-                    }
-            return layers[layer[0]]()
-        
+        def switch(layer, t):
+            layer_type = layer[0]
+            
+            #make shift switch statement 
+            if layer_type == "conv":
+                c = Conv2D(t, int(layer[1]), (int(layer[2]), int(layer[3])))
+                return c.conv
+            
+            elif layer_type == "activation":
+                a = Activation(t)
+                return a.activated_tensor
+            
+            elif layer_type == "pool":
+                p = MaxPool(t)
+                return p.pooled
+
+            elif layer_type == "dense":
+                d = Dense(int(layer[1]), t, self.fully_connected_layers)
+                return d.out
+            else:
+                print("fail")
+
         results = tensor
         for layer in self.layers:
             l = layer.split(",")
             results = switch(l, results)
-            print(results)
+            print(l, np.shape(results))
