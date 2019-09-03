@@ -32,4 +32,4 @@ class MaxPool:
             
             down_sampled.append(max_filter)
         down_sampled = np.array(down_sampled)
-        return down_sampled
+        return down_sampled.transpose(2, 1, 0)

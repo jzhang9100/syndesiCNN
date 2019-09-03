@@ -40,7 +40,7 @@ class Conv2D:
         (self.padX, self.padY, self.padZ) = self.padded_tensor.shape
         
         #perform convolution on tensor with filters
-        self.conv = self.conv2D().transpose(0, 1, 2)
+        self.conv = self.conv2D()
             
     def conv2D(self):
         conv_tensor = []
@@ -53,12 +53,9 @@ class Conv2D:
                 for c in range(3, self.padY+1):
                     local_region = np.array(self.padded_tensor[r-3:r,c-3:c])
                     #make sure filter and the local region have the same dimensions 
-                    assert local_region.shape == i.shape
-                    tensor_dot_prod = 0
-                    #get dot product of the filter and local region of the tensor
-                    for chan in range(self.kernZ):
-                        tensor_dot_prod += np.dot(local_region[chan].flatten(), i[chan].flatten())
-                          
+                    assert local_region.shape == i.shape, str(local_region.shape) + " " + str(i.shape)
+                    
+                    tensor_dot_prod = self.tensor_dot(local_region, i)      
                     conv_row.append(tensor_dot_prod)
                 
                 conv_layer.append(conv_row)
@@ -66,10 +63,15 @@ class Conv2D:
             conv_tensor.append(conv_layer)
         conv_tensor = np.array(conv_tensor)
         return conv_tensor
+    
+    def tensor_dot(self, t1, t2):
+        t1 = t1.flatten()
+        t2 = t2.flatten()
+        return np.dot(t1, t2)
 
     #generates random filter with dimensions kernX x kernY x kernZ, initiates values to be integers [-1, 2) aka [-1, 1]
     def get_filter(self):
-        kern = np.random.randint(-1, 2, (self.kernZ, self.kernY, self.kernX)).tolist()        
+        kern = np.random.randint(-1, 2, (self.kernX, self.kernY, self.kernZ)).tolist()        
         return np.array(kern)
 
     #gets kernel size and mean val
@@ -94,4 +96,4 @@ class Conv2D:
     def same_padding(self, tensor):
         padX, padY = self.kernX - 2, self.kernY - 2
         t = np.pad(tensor, (padX, padY), 'constant')
-        return t[:,:,1:4] #keep a depth of 3, dont wanna pad the channels will have to change to work with grey scale 
+        return t[:,:,1:self.z+1] #keep a depth of 3, dont wanna pad the channels will have to change to work with grey scale 
