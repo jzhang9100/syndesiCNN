@@ -2,11 +2,12 @@
 from keras.datasets import cifar10
 from model import Sequential
 from layers.pool import MaxPool
+from one_hot import one_hot 
 
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 x_train, x_test = x_train/255, x_test/255
-test = x_train[0]
+y_train = one_hot(y_train)
 
 model = Sequential(x_train, y_train)
 

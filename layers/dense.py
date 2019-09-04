@@ -1,9 +1,7 @@
 import numpy as np
 
-def sigmoid(z): 
-        #put z into sigmoid function
-        sigmoid_function = 1 / (1 + np.exp(-z))
-        return sigmoid_function
+def relu(z):
+    return max(0, z)
 
 #fully connected layer, takes activations and implements a neural network to compute class scores
 class Dense:
@@ -20,8 +18,8 @@ class Dense:
 
         assert len(self.bias) == len(self.weights) #make sure matrix multiplication finna work
         for i in range(self.neurons):
-            z = np.dot(self.flat, self.weights[i]) + self.bias[i]  #sigmoid gate
-            out.append(sigmoid(z[0]))
+            z = np.dot(self.flat, self.weights[i]) + self.bias[i]  
+            out.append(relu(z))
         return out
 
     def show(self):

@@ -2,7 +2,9 @@ from layers.conv2D import Conv2D
 from layers.activation import Activation
 from layers.dense import Dense
 from layers.pool import MaxPool
-import numpy as np
+from backprop.loss import Loss
+
+import numpyi as np
 
 class Sequential:
     def __init__(self, train_data, train_labels):
@@ -89,3 +91,4 @@ class Sequential:
             l = layer.split(",")
             results = switch(l, results)
             print(l, np.shape(results))
+
