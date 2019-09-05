@@ -5,11 +5,11 @@ class Loss:
     y = binary labeld array
     p = predicted probability 
     '''
-    def __init__(self, y, p)
-        assert len(y) = len(p)
+    def __init__(self, y, p):
+        assert len(y) == len(p)
         self.label = y
         self.predicted = p
-        self.cross_entropy = CrossEntropy()
+        self.cross_entropy = self.CrossEntropy()
 
     def CrossEntropy(self):
         loss = 0

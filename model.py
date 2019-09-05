@@ -4,7 +4,7 @@ from layers.dense import Dense
 from layers.pool import MaxPool
 from backprop.loss import Loss
 
-import numpyi as np
+import numpy as np
 
 class Sequential:
     def __init__(self, train_data, train_labels):
@@ -91,4 +91,5 @@ class Sequential:
             l = layer.split(",")
             results = switch(l, results)
             print(l, np.shape(results))
-
+        l = Loss(results, self.labels[0])
+        print(l.cross_entropy)
