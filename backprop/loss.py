@@ -11,9 +11,9 @@ class Loss:
         self.predicted = p
         self.cross_entropy = self.CrossEntropy()
 
-    def CrossEntropy(self):
+    def CrossEntropy(self, epsilon = 1e-12):
+        self.predicted = np.clip(self.predicted, epsilon, )
         loss = 0
         for i in range(len(self.label)):
             loss += self.label[i]*np.log(self.predicted[i])
-
         return -loss
