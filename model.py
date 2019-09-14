@@ -34,7 +34,10 @@ class Sequential:
     #adds a fully connected layer with specified nuerons to layer queue
     def add_Dense(self, neurons):
         layer = "dense," + str(neurons)
-        self.fully_connected_layers += 1
+        self.layers.append(layer)
+    
+    def out(self, neurons):
+        layer = "output, " + str(neurons)
         self.layers.append(layer)
     
     #prints layer queue
@@ -81,9 +84,12 @@ class Sequential:
                 return p.pooled
 
             elif layer_type == "dense":
-                d = Dense(int(layer[1]), t, self.fully_connected_layers)
+                d = Dense(int(layer[1]), t)
+                return d.fpass
+            elif layer_type == "output":
+                d = Dense(int(layer(1)), t)
                 d.show()
-                return d.out
+                return d.out()
             else:
                 print("fail")
 
