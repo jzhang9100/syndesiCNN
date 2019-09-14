@@ -2,7 +2,7 @@ import numpy as np
 
 #fully connected layer, takes activations and implements a neural network to compute class scores
 class Dense:
-    def __init__(self, neurons, tensor, num_layers):
+    def __init__(self, neurons, tensor):
         self.neurons = neurons  #number of neurons in the layer
         self.flat = np.array(tensor).flatten()  #flatten tensor
         #weights initiated to be random matrix of neurons x flattened input

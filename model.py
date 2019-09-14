@@ -87,9 +87,9 @@ class Sequential:
                 d = Dense(int(layer[1]), t)
                 return d.fpass
             elif layer_type == "output":
-                d = Dense(int(layer(1)), t)
+                d = Dense(int(layer[1]), t)
                 d.show()
-                return d.out()
+                return d.out
             else:
                 print("fail")
 

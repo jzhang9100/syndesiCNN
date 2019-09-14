@@ -24,7 +24,7 @@ model.add_Activation()
 model.add_Pool()
 
 model.add_Dense(512)
-model.output(10)
+model.out(10)
 
 model.compile(1, 32) 
 
