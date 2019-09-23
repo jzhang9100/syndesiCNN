@@ -86,10 +86,10 @@ class Sequential:
             elif layer_type == "dense":
                 d = Dense(int(layer[1]), t)
                 return d.fpass
+            
             elif layer_type == "output":
                 d = Dense(int(layer[1]), t)
-                d.show()
-                return d.out
+                return d.predict()
             else:
                 print("fail")
 
@@ -98,5 +98,3 @@ class Sequential:
             l = layer.split(",")
             results = switch(l, results)
             print(l, np.shape(results))
-        #l = Loss(results, self.labels[0])
-       # print(l.cross_entropy)

@@ -9,14 +9,17 @@ class Dense:
         self.weights = np.random.randn(self.neurons,len(self.flat)) / np.sqrt(len(self.flat))
         self.bias = np.random.randn(self.neurons) * np.sqrt(2.0/self.neurons) #random bias vecotor with mean 0 and variance 1
         self.fpass = self.fowardpass()  #pass input, wieghts, and bias through sigmoid function
-        self.out = self.predict()
 
     def predict(self):
-        return np.dot(self.weights, self.flat) + self.bias
+        out = np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
+        print(out)
+        soft = self.softmax(out)
+        print(soft)
+        return soft
+
+    def softmax(self, x):
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
 
     def fowardpass(self):
         assert len(self.bias) == len(self.weights)
         return np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
-
-    def show(self):
-        print('score', self.out, np.shape(self.out))
