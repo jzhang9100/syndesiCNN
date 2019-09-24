@@ -14,9 +14,7 @@ class Dense:
 
     def predict(self):
         out = np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
-        print(out)
         soft = self.softmax(out)
-        print(soft)
         return soft
 
     def softmax(self, x):
@@ -27,9 +25,15 @@ class Dense:
         return np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
 
 class dense_test(unittest.TestCase):
-    
-    def test_softmax(self):
-        self.assertEqual(1, 1)
 
-    if __name__ == '__main__':
-        unittest.main()
+    def test_softmax(self):
+        tens = [1, 3, 2, 4, 3, 4, 2, 5, 3]
+        d = Dense(10, tens)
+        
+        soft = d.predict()
+        print(tens, '\n', soft)
+        assert len(soft) == d.neurons
+    
+
+if __name__ == '__main__':
+    unittest.main()
