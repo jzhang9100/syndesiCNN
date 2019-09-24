@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import numpy as np
+import unittest
 
 #fully connected layer, takes activations and implements a neural network to compute class scores
 class Dense:
@@ -23,3 +25,11 @@ class Dense:
     def fowardpass(self):
         assert len(self.bias) == len(self.weights)
         return np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
+
+class dense_test(unittest.TestCase):
+    
+    def test_softmax(self):
+        self.assertEqual(1, 1)
+
+    if __name__ == '__main__':
+        unittest.main()
