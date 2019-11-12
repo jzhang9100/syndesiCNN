@@ -13,27 +13,28 @@ class Dense:
         self.fpass = self.fowardpass()  #pass input, wieghts, and bias through sigmoid function
 
     def predict(self):
-        out = np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
-        soft = self.softmax(out)
+        #we apply the softmax function to the input to return the class probablities
+        soft = self.softmax(self.flat)
         return soft
 
     def softmax(self, x):
-        return np.exp(x) / np.sum(np.exp(x), axis=0)
+        exp = np.exp(x)
+        norm = np.sum(exp)
+        exp = exp/norm
+        exp = -1*np.log10(exp)
+        print(exp, 'scores')
+        return exp
 
     def fowardpass(self):
         assert len(self.bias) == len(self.weights)
         return np.maximum(0, np.dot(self.weights, self.flat) + self.bias)
 
 class dense_test(unittest.TestCase):
-
     def test_softmax(self):
-        tens = [1, 3, 2, 4, 3, 4, 2, 5, 3]
-        d = Dense(10, tens)
-        
-        soft = d.predict()
-        print(tens, '\n', soft)
-        assert len(soft) == d.neurons
-    
+        scores = [3.2, 5.1, -1.7]
+        d = Dense(3, scores)
+        out = d.predict()
+        assert round(out[0], 2) == 0.89
 
 if __name__ == '__main__':
     unittest.main()
