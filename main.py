@@ -26,5 +26,4 @@ model.add_Pool()
 model.add_Dense(512)
 model.out(10)
 
-model.compile(1, 32) 
-
+model.compile(1, 32)

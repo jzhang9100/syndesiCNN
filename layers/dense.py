@@ -14,7 +14,8 @@ class Dense:
 
     def predict(self):
         #we apply the softmax function to the input to return the class probablities
-        soft = self.softmax(self.flat)
+        score = self.fowardpass()
+        soft = self.softmax(score)
         return soft
 
     def softmax(self, x):
@@ -22,7 +23,6 @@ class Dense:
         norm = np.sum(exp)
         exp = exp/norm
         exp = -1*np.log10(exp)
-        print(exp, 'scores')
         return exp
 
     def fowardpass(self):

@@ -54,17 +54,20 @@ class Sequential:
             batches = self.dat_size//batchSize
             for batch in range(1,batches+1):
                 curr_batch = None
-                score = []
+                curr_scores = None 
                 if batch == batches:
                     curr_batch = self.data[self.dat_size - (batch*batchSize):self.dat_size] 
+                    curr_scores = self.labels[self.dat_size - (batch*batchSize):self.dat_size]  
                 else:
                     curr_batch = self.data[batchSize*(batch-1):batch*batchSize] #deffintly a bertter way to do this lol
-                
-                print(curr_batch.shape)
+                    curr_scores = self.labels[batchSize*(batch-1):batch*batchSize]
+
+                batch_pred = []
                 for tensor in curr_batch:
-                    score.append(self.evaluate(tensor))
-                    break
-                break
+                    batch_pred.append(self.evaluate(tensor))
+                
+                loss = Loss(batch_pred, curr_scores)
+                print('loss', loss.get_cross_loss())
     
     def evaluate(self, tensor):
         def switch(layer, t):
@@ -97,4 +100,4 @@ class Sequential:
         for layer in self.layers:
             l = layer.split(",")
             results = switch(l, results)
-            print(l, np.shape(results))
+        return results

@@ -20,3 +20,6 @@ class Loss:
                 sum_score += y[i][j] * (log(1e-15 + p[i][j]))
         mean_sum_score = (1.0 / len(y)) * sum_score
         return -mean_sum_score
+    
+    def get_cross_loss(self):
+        return self.cross_entropy
